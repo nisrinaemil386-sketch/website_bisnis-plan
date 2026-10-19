@@ -1,0 +1,762 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DuitTeman | Atur Uangmu, Tantang Dirimu!</title>
+<style>
+:root {
+  --blue:#69b5ed;
+  --dark:#254765;
+  --bg:#f3f9ff;
+  --white:#fff;
+  --green:#51b995;
+  --pink:#ff8da5;
+  --border:#e4edf6;
+}
+* {box-sizing:border-box}
+html {scroll-behavior:smooth}
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:#344b60;
+}
+button,input,select {font:inherit}
+button,a {cursor:pointer}
+a {text-decoration:none;color:inherit}
+header {
+  position:sticky;top:0;z-index:10;
+  background:#ffffffed;
+  border-bottom:1px solid var(--border);
+}
+nav {
+  max-width:1150px;margin:auto;padding:16px 22px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:20px;
+}
+.logo {font-size:24px;font-weight:900;color:var(--dark)}
+.logo span {color:var(--blue)}
+.navlinks {display:flex;gap:24px;align-items:center}
+.navlinks a:hover {color:var(--blue)}
+.btn {
+  display:inline-block;border:0;border-radius:12px;
+  padding:12px 18px;background:var(--blue);
+  color:white;font-weight:bold;transition:.2s;
+}
+.btn:hover {transform:translateY(-2px);filter:brightness(.95)}
+.btn.secondary {background:white;color:var(--dark);border:1px solid var(--border)}
+.hero {
+  padding:75px 22px;
+  background:linear-gradient(120deg,#fff,#e5f4ff);
+}
+.hero-inner {
+  max-width:1100px;margin:auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;gap:45px;
+}
+.tag {
+  display:inline-block;background:#e1f3ff;color:#3986bd;
+  padding:8px 13px;border-radius:30px;font-size:13px;font-weight:bold;
+}
+h1 {font-size:clamp(38px,5vw,58px);line-height:1.1;color:var(--dark)}
+h1 span {color:#55a7e4}
+.hero p,.muted {color:#74889b;line-height:1.7}
+.hero-buttons {display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}
+.mockup {
+  max-width:360px;width:100%;margin:auto;background:white;
+  padding:22px;border-radius:28px;
+  box-shadow:0 20px 60px #4d86b226;
+  transform:rotate(2deg);
+}
+.mockup-balance {
+  background:linear-gradient(130deg,#4f9fdd,#9bd8ff);
+  color:white;border-radius:18px;padding:20px;margin:20px 0;
+}
+.mockup-balance strong {display:block;font-size:27px;margin:10px 0}
+.mock-stats {display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mock-stats div {background:#f2f8ff;padding:13px;border-radius:12px;font-size:13px}
+section {padding:65px 22px;scroll-margin-top:80px}
+.container {max-width:1100px;margin:auto}
+.section-title {text-align:center;margin-bottom:32px}
+.section-title h2 {font-size:32px;color:var(--dark)}
+.section-title p {color:#77899b;line-height:1.7}
+.features {display:grid;grid-template-columns:repeat(4,1fr);gap:17px}
+.card {
+  background:white;border:1px solid var(--border);
+  border-radius:20px;padding:22px;
+  box-shadow:0 5px 20px #3d668009;
+}
+.feature-icon {font-size:29px;margin-bottom:14px}
+.card h3 {color:var(--dark);margin-top:0}
+.card p {font-size:14px;line-height:1.7;color:#75889b}
+#dashboard {background:#edf6ff}
+.demo-label {
+  display:inline-block;background:#fff0c8;color:#927324;
+  padding:7px 11px;border-radius:20px;font-size:12px;font-weight:bold;
+}
+.dashboard-head {
+  display:flex;justify-content:space-between;align-items:center;
+  gap:15px;margin-bottom:22px;
+}
+.dashboard-head h2 {color:var(--dark);margin-bottom:5px}
+.stats {display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stat {background:white;border:1px solid var(--border);border-radius:17px;padding:17px;min-width:0}
+.stat small {color:#7b8ea0}
+.stat strong {display:block;color:var(--dark);font-size:clamp(15px,2vw,22px);margin:13px 0;overflow-wrap:anywhere}
+.green {color:var(--green)!important}
+.red {color:#e87b90!important}
+.two-cols {display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}
+.progress {height:10px;background:#e9f0f7;border-radius:20px;overflow:hidden;margin:12px 0}
+.progress span {display:block;height:100%;width:0;background:var(--green);border-radius:20px;transition:width .3s}
+.category-row,.transaction-row {
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:12px 0;border-bottom:1px solid #edf2f7;
+}
+.category-row:last-child,.transaction-row:last-child {border-bottom:0}
+.category-row small,.transaction-row small {display:block;color:#8293a3;margin-top:4px}
+.category-row strong,.transaction-row strong {font-size:13px}
+form {display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.field {display:flex;flex-direction:column;gap:7px}
+.field label {font-size:13px;font-weight:bold;color:#587087}
+.field input,.field select {
+  width:100%;padding:12px;border:1px solid #dce7f1;
+  border-radius:11px;background:#fff;outline:none;color:#344b60;
+}
+.field input:focus,.field select:focus {border-color:var(--blue)}
+.full {grid-column:1/-1}
+.form-actions {grid-column:1/-1;display:flex;justify-content:flex-end;gap:9px}
+.challenge-grid {display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.challenge-icon {
+  width:50px;height:50px;border-radius:15px;
+  background:#e6f4ff;display:grid;place-items:center;font-size:25px;
+}
+.status {font-size:12px;font-weight:bold;color:#5288af}
+.badges {display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.badge {text-align:center;background:#f7fbff;border-radius:15px;padding:14px 5px}
+.badge span {display:block;font-size:30px;margin-bottom:8px}
+.badge small {color:#71869a}
+.education {display:grid;grid-template-columns:1fr 1fr;gap:17px}
+.tip {padding:12px;background:#f4f9ff;border-radius:13px;margin:10px 0}
+.quiz-option {
+  display:block;width:100%;text-align:left;padding:12px;
+  margin:8px 0;border-radius:11px;border:1px solid var(--border);
+  background:white;color:#425b71;
+}
+.quiz-option:hover {background:#eaf6ff}
+.quiz-option:disabled {cursor:default}
+#quizResult {padding:12px;background:#e5f8ef;border-radius:12px;margin-top:12px;font-size:14px}
+.sdg-grid {display:grid;grid-template-columns:1fr 1fr;gap:17px}
+.sdg-number {
+  display:inline-grid;place-items:center;width:50px;height:50px;
+  background:#e2f3ff;border-radius:14px;font-weight:bold;font-size:20px;
+}
+.about-box {
+  background:linear-gradient(120deg,#dff2ff,#f0eaff);
+  border-radius:22px;padding:28px;margin-top:25px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+footer {background:#23435f;color:white;padding:35px 22px}
+footer p {color:#c0d5e5;line-height:1.7}
+.footer-inner {max-width:1100px;margin:auto}
+.toast {
+  position:fixed;bottom:20px;right:20px;z-index:20;
+  background:#254765;color:white;padding:15px 19px;
+  border-radius:13px;box-shadow:0 10px 30px #0002;
+  opacity:0;transform:translateY(20px);transition:.25s;
+  pointer-events:none;max-width:calc(100vw - 40px);
+}
+.toast.show {opacity:1;transform:translateY(0)}
+.settings-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.settings-note {font-size:13px;color:#75889b;line-height:1.6}
+.transaction-actions {display:flex;align-items:center;gap:7px}
+.delete-transaction {border:1px solid #f3d8df;background:#fff5f7;color:#c65e75;border-radius:9px;padding:7px 9px;font-size:12px;font-weight:bold}
+.streak-pill {display:inline-block;background:#fff0c8;color:#987325;padding:7px 11px;border-radius:20px;font-weight:bold;font-size:13px}
+@media(max-width:600px) {.settings-grid {grid-template-columns:1fr}.transaction-actions {align-items:flex-end;flex-direction:column}}
+@media(max-width:850px) {
+  .hero-inner {grid-template-columns:1fr}
+  .hero {padding:48px 22px}
+  .hero-art {margin-top:10px}
+  .features {grid-template-columns:repeat(2,1fr)}
+  .stats {grid-template-columns:repeat(2,1fr)}
+  .challenge-grid {grid-template-columns:1fr}
+}
+@media(max-width:600px) {
+  nav {flex-wrap:wrap}
+  .navlinks {width:100%;gap:13px;justify-content:center;flex-wrap:wrap;font-size:13px}
+  .navlinks .btn {padding:9px 12px}
+  .hero-inner {gap:20px}
+  h1 {font-size:42px}
+  section {padding:45px 16px}
+  .features,.two-cols,.education,.sdg-grid {grid-template-columns:1fr}
+  .dashboard-head {align-items:flex-start;flex-direction:column}
+  .stats {gap:9px}
+  .stat {padding:12px}
+  form {grid-template-columns:1fr}
+  .full,.form-actions {grid-column:1}
+  .badges {grid-template-columns:repeat(2,1fr)}
+  .about-box {flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<header>
+<nav>
+  <a href="#beranda" class="logo">🪙 Duit<span>Teman</span></a>
+  <div class="navlinks">
+    <a href="#beranda">Beranda</a>
+    <a href="#fitur">Fitur</a>
+    <a href="#tantangan">Tantangan</a>
+    <a href="#tentang">Tentang Kami</a>
+    <a href="#dashboard" class="btn">Mulai Sekarang ↗</a>
+  </div>
+</nav>
+</header>
+
+<section class="hero" id="beranda">
+<div class="container hero-inner">
+  <div>
+    <span class="tag">✨ Teman finansial mahasiswa</span>
+    <h1>Atur Uangmu,<br><span>Tantang Dirimu!</span></h1>
+    <p>Kelola keuangan mahasiswa dengan cara yang lebih seru. Catat transaksi, bangun kebiasaan menabung, selesaikan tantangan, dan kumpulkan XP!</p>
+    <div class="hero-buttons">
+      <a class="btn" href="#dashboard">Mulai Sekarang →</a>
+      <a class="btn secondary" href="#fitur">Jelajahi Fitur</a>
+    </div>
+    <p>💙 Mulai dari langkah kecil, bangun kebiasaan besar.</p>
+  </div>
+  <div class="hero-art">
+    <div class="mockup">
+      <b>Hai, Teman! 👋</b>
+      <div class="mockup-balance">
+        <small>Saldo simulasi</small>
+        <strong>Rp1.250.000</strong>
+        ✨ Kamu bisa mengatur uangmu!
+      </div>
+      <div class="mock-stats">
+        <div>📥 Pemasukan<strong>Rp2.000.000</strong></div>
+        <div>📤 Pengeluaran<strong>Rp750.000</strong></div>
+      </div>
+      <p>🎯 Anggaran bulanan</p>
+      <div class="progress"><span style="width:63%"></span></div>
+      <small>Terpakai 63% dari anggaran</small>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="fitur">
+<div class="container">
+  <div class="section-title">
+    <h2>Keuangan Lebih Terarah 💙</h2>
+    <p>Semua yang kamu butuhkan untuk mulai membangun kebiasaan finansial yang sehat.</p>
+  </div>
+  <div class="features">
+    <div class="card"><div class="feature-icon">📊</div><h3>Dashboard Pintar</h3><p>Pantau saldo, pemasukan, pengeluaran, dan anggaran.</p></div>
+    <div class="card"><div class="feature-icon">🧾</div><h3>Catat Transaksi</h3><p>Masukkan pemasukan dan pengeluaran harian dengan mudah.</p></div>
+    <div class="card"><div class="feature-icon">🎯</div><h3>Tantangan Hemat</h3><p>Selesaikan misi, dapatkan XP, dan raih pencapaian.</p></div>
+    <div class="card"><div class="feature-icon">🧠</div><h3>Edukasi Finansial</h3><p>Belajar anggaran, prioritas kebutuhan, dan menabung.</p></div>
+  </div>
+</div>
+</section>
+
+<section id="dashboard">
+<div class="container">
+  <div class="dashboard-head">
+    <div><h2>Dashboard Keuangan 👋</h2><p class="muted">Pantau kondisi keuanganmu hari ini.</p></div>
+    <span class="demo-label">● DATA SIMULASI</span>
+  </div>
+
+  <div class="card" style="margin-bottom:17px">
+    <h3>⚙️ Atur Keuangan & Gamifikasi</h3>
+    <p class="settings-note">Atur nilai langsung dari website. Saldo akhir dihitung dari saldo awal + pemasukan − pengeluaran. Pengaturan dan transaksi disimpan di browser ini.</p>
+    <form id="settingsForm" class="settings-grid">
+      <div class="field">
+        <label for="settingSaldo">Saldo awal (Rp)</label>
+        <input id="settingSaldo" type="number" min="0" step="100" required>
+      </div>
+      <div class="field">
+        <label for="settingBudget">Target anggaran bulanan (Rp)</label>
+        <input id="settingBudget" type="number" min="0" step="100" required>
+      </div>
+      <div class="field">
+        <label for="settingXP">XP saat ini</label>
+        <input id="settingXP" type="number" min="0" step="1" required>
+      </div>
+      <div class="field">
+        <label for="settingStreak">Streak (hari)</label>
+        <input id="settingStreak" type="number" min="0" step="1" required>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Simpan Pengaturan</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><small>💰 Saldo</small><strong id="saldo">Rp1.250.000</strong><small>Saldo saat ini</small></div>
+    <div class="stat"><small>📥 Pemasukan</small><strong id="pemasukan" class="green">Rp2.000.000</strong><small>Total pemasukan</small></div>
+    <div class="stat"><small>📤 Pengeluaran</small><strong id="pengeluaran" class="red">Rp750.000</strong><small>Total pengeluaran</small></div>
+    <div class="stat"><small>🌱 Sisa anggaran</small><strong id="sisa">Rp450.000</strong><small>Anggaran Rp1.200.000</small></div>
+  </div>
+
+  <div class="two-cols">
+    <div class="card">
+      <h3>📈 Anggaran Bulanan</h3>
+      <p id="budgetText">Rp750.000 dari Rp1.200.000</p>
+      <div class="progress"><span id="budgetBar" style="width:62.5%"></span></div>
+      <small id="budgetPercent">63% terpakai</small>
+    </div>
+    <div class="card">
+      <h3>🛍️ Pengeluaran per Kategori</h3>
+      <div id="categories"></div>
+    </div>
+  </div>
+
+  <div class="two-cols">
+    <div class="card">
+      <h3>✍️ Tambah Transaksi</h3>
+      <form id="transactionForm">
+        <div class="field">
+          <label for="jenis">Jenis transaksi</label>
+          <select id="jenis"><option value="expense">Pengeluaran</option><option value="income">Pemasukan</option></select>
+        </div>
+        <div class="field">
+          <label for="nominal">Nominal (Rp)</label>
+          <input id="nominal" type="number" min="1" required placeholder="Contoh: 15000">
+        </div>
+        <div class="field">
+          <label for="kategori">Kategori</label>
+          <select id="kategori">
+            <option>Makan & minum</option><option>Transportasi</option>
+            <option>Kuliah</option><option>Hiburan</option>
+            <option>Belanja</option><option>Tabungan</option>
+            <option>Uang saku</option><option>Lainnya</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="tanggal">Tanggal</label>
+          <input id="tanggal" type="date" required>
+        </div>
+        <div class="field full">
+          <label for="deskripsi">Deskripsi</label>
+          <input id="deskripsi" maxlength="80" required placeholder="Contoh: makan siang di kantin">
+        </div>
+        <div class="form-actions">
+          <button class="btn secondary" type="reset">Bersihkan</button>
+          <button class="btn" type="submit">＋ Simpan</button>
+        </div>
+      </form>
+    </div>
+    <div class="card">
+      <h3>🧾 Riwayat Transaksi</h3>
+      <div id="transactions"></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="tantangan">
+<div class="container">
+  <div class="section-title">
+    <h2>Tantangan Hemat 🎯</h2>
+    <p>Selesaikan misi untuk membangun kebiasaan keuangan yang lebih baik.</p>
+  </div>
+  <div class="challenge-grid" id="challenges"></div>
+</div>
+</section>
+
+<section id="pencapaian">
+<div class="container">
+  <div class="section-title">
+    <h2>Poin dan Pencapaian 🏆</h2>
+    <p>Setiap aktivitas baik adalah langkah menuju kebebasan finansial.</p>
+  </div>
+  <div class="card">
+    <h3>✨ Petualang Finansial</h3>
+    <h2><span id="xp">120</span> XP</h2>
+    <p id="level">Level 2 · Penjelajah Hemat</p>
+    <p><span class="streak-pill">🔥 Streak: <span id="streakValue">0</span> hari</span></p>
+    <div class="progress"><span id="xpBar" style="width:20%"></span></div>
+    <small id="xpProgress">120 / 200 XP menuju level berikutnya</small>
+    <hr style="border:0;border-top:1px solid #e5edf5;margin:25px 0">
+    <h3>Koleksi Lencana</h3>
+    <div class="badges" id="badges"></div>
+  </div>
+</div>
+</section>
+
+<section id="edukasi">
+<div class="container">
+  <div class="section-title">
+    <h2>Belajar Finansial 🧠</h2>
+    <p>Tips sederhana yang bisa langsung kamu terapkan.</p>
+  </div>
+  <div class="education">
+    <div class="card">
+      <h3>💡 Tips Finansial</h3>
+      <div class="tip"><b>🧮 Buat anggaran</b><p>Pisahkan kebutuhan, keinginan, dan tabungan.</p></div>
+      <div class="tip"><b>🐷 Menabung di awal</b><p>Sisihkan uang saat menerima uang saku.</p></div>
+      <div class="tip"><b>🛒 Hindari belanja impulsif</b><p>Tunda pembelian yang tidak mendesak selama 24 jam.</p></div>
+      <div class="tip"><b>🎒 Prioritaskan kuliah</b><p>Dahulukan makan, transportasi, kuota, dan kebutuhan akademik.</p></div>
+    </div>
+    <div class="card">
+      <h3>📝 Kuis Kilat</h3>
+      <p><b>Kapan waktu yang baik untuk menyisihkan tabungan?</b></p>
+      <div id="quiz">
+        <button class="quiz-option" data-answer="a">A. Menunggu uang sisa di akhir bulan</button>
+        <button class="quiz-option" data-answer="b">B. Di awal setelah menerima uang saku</button>
+        <button class="quiz-option" data-answer="c">C. Hanya saat ingin membeli sesuatu</button>
+      </div>
+      <p id="quizResult" class="hidden"></p>
+      <button class="btn secondary" id="retryQuiz">Coba Lagi</button>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="tentang">
+<div class="container">
+  <div class="section-title">
+    <h2>Teknologi untuk Masa Depan 🌏</h2>
+    <p>DuitTeman mendukung literasi keuangan mahasiswa melalui teknologi interaktif.</p>
+  </div>
+  <div class="sdg-grid">
+    <div class="card">
+      <span class="sdg-number">04</span>
+      <h3>SDG 4 · Pendidikan Berkualitas</h3>
+      <p>Membantu mahasiswa mempelajari literasi keuangan dan mengembangkan keterampilan hidup untuk mengambil keputusan finansial yang lebih baik.</p>
+    </div>
+    <div class="card">
+      <span class="sdg-number">08</span>
+      <h3>SDG 8 · Pekerjaan Layak dan Pertumbuhan Ekonomi</h3>
+      <p>Mendorong kebiasaan finansial yang sehat, perencanaan mandiri, dan kesiapan menghadapi dunia kerja.</p>
+    </div>
+  </div>
+  <div class="about-box">
+    <div><h2>Mulai dari satu catatan hari ini 🌱</h2><p>Catat, evaluasi, dan rayakan progres kecilmu bersama DuitTeman.</p></div>
+    <a href="#dashboard" class="btn">Mulai Sekarang →</a>
+  </div>
+</div>
+</section>
+
+<footer>
+<div class="footer-inner">
+  <div class="logo" style="color:white">🪙 Duit<span>Teman</span></div>
+  <p>Teman perjalanan finansial mahasiswa Indonesia.</p>
+  <p>© 2026 DuitTeman · Prototipe bisnis Informatika.</p>
+  <small>Semua data pada website ini merupakan simulasi, bukan layanan keuangan sungguhan.</small>
+</div>
+</footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+const formatRupiah = n => new Intl.NumberFormat("id-ID", {
+  style:"currency",currency:"IDR",maximumFractionDigits:0
+}).format(n);
+
+const today = new Date();
+document.getElementById("tanggal").value =
+  `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
+
+// Data awal kosong agar pengguna mengatur sendiri lewat antarmuka website.
+const stored = (key, fallback) => {
+  try {
+    const value = localStorage.getItem("duitTeman_" + key);
+    return value === null ? fallback : JSON.parse(value);
+  } catch (error) {
+    return fallback;
+  }
+};
+
+let saldoAwal = stored("saldoAwal", 0);
+let budgetBulanan = stored("budgetBulanan", 1200000);
+let transactions = stored("transactions", []);
+let xp = stored("xp", 0);
+let streak = stored("streak", 0);
+let completedMissions = stored("completedMissions", 0);
+let quizRewarded = stored("quizRewarded", false);
+
+const defaultChallenges = [
+  {id:1,title:"7 Hari Catat Pengeluaran",emoji:"🧾",desc:"Biasakan mencatat pengeluaran setiap hari.",target:7,progress:0,reward:50,joined:false,claimed:false},
+  {id:2,title:"Jajan Lebih Bijak",emoji:"🥤",desc:"Latih diri mengurangi jajan impulsif.",target:3,progress:0,reward:40,joined:false,claimed:false},
+  {id:3,title:"Mulai Menabung",emoji:"🐷",desc:"Bangun kebiasaan menabung lewat langkah kecil.",target:5,progress:0,reward:60,joined:false,claimed:false}
+];
+let challenges = stored("challenges", defaultChallenges);
+
+function saveState() {
+  localStorage.setItem("duitTeman_saldoAwal", JSON.stringify(saldoAwal));
+  localStorage.setItem("duitTeman_budgetBulanan", JSON.stringify(budgetBulanan));
+  localStorage.setItem("duitTeman_transactions", JSON.stringify(transactions));
+  localStorage.setItem("duitTeman_xp", JSON.stringify(xp));
+  localStorage.setItem("duitTeman_streak", JSON.stringify(streak));
+  localStorage.setItem("duitTeman_completedMissions", JSON.stringify(completedMissions));
+  localStorage.setItem("duitTeman_quizRewarded", JSON.stringify(quizRewarded));
+  localStorage.setItem("duitTeman_challenges", JSON.stringify(challenges));
+}
+
+function loadSettingsIntoForm() {
+  document.getElementById("settingSaldo").value = saldoAwal;
+  document.getElementById("settingBudget").value = budgetBulanan;
+  document.getElementById("settingXP").value = xp;
+  document.getElementById("settingStreak").value = streak;
+}
+
+document.getElementById("settingsForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const newSaldo = Number(document.getElementById("settingSaldo").value);
+  const newBudget = Number(document.getElementById("settingBudget").value);
+  const newXP = Number(document.getElementById("settingXP").value);
+  const newStreak = Number(document.getElementById("settingStreak").value);
+
+  if (![newSaldo,newBudget,newXP,newStreak].every(Number.isFinite) ||
+      newSaldo < 0 || newBudget < 0 || newXP < 0 || newStreak < 0) {
+    notify("Masukkan nilai nol atau lebih.");
+    return;
+  }
+
+  saldoAwal = newSaldo;
+  budgetBulanan = newBudget;
+  xp = Math.floor(newXP);
+  streak = Math.floor(newStreak);
+  saveState();
+  updateDashboard();
+  renderGamification();
+  notify("Pengaturan berhasil disimpan! ✨");
+});
+
+function notify(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"),2600);
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[ch]);
+}
+
+function getTotals() {
+  const income = transactions.filter(t=>t.type==="income")
+    .reduce((s,t)=>s+t.amount,0);
+  const expense = transactions.filter(t=>t.type==="expense")
+    .reduce((s,t)=>s+t.amount,0);
+  return {income,expense,balance:saldoAwal+income-expense,remaining:budgetBulanan-expense};
+}
+
+function updateDashboard() {
+  const t = getTotals();
+  document.getElementById("saldo").textContent = formatRupiah(t.balance);
+  document.getElementById("pemasukan").textContent = formatRupiah(t.income);
+  document.getElementById("pengeluaran").textContent = formatRupiah(t.expense);
+  document.getElementById("sisa").textContent = formatRupiah(t.remaining);
+  document.getElementById("sisa").style.color = t.remaining < 0 ? "#e87b90" : "";
+
+  const pct = budgetBulanan > 0
+    ? Math.min(100,Math.round(t.expense/budgetBulanan*100))
+    : (t.expense > 0 ? 100 : 0);
+  document.getElementById("budgetText").textContent =
+    `${formatRupiah(t.expense)} dari ${formatRupiah(budgetBulanan)}`;
+  document.getElementById("budgetBar").style.width = pct+"%";
+  document.getElementById("budgetPercent").textContent = pct+"% terpakai";
+
+  const icons = {
+    "Makan & minum":"🍜","Transportasi":"🚌","Kuliah":"📚",
+    "Hiburan":"🎮","Belanja":"🛍️","Tabungan":"🐷",
+    "Uang saku":"💵","Lainnya":"✨"
+  };
+  const categories = {};
+  transactions.filter(t=>t.type==="expense").forEach(t=>{
+    categories[t.category]=(categories[t.category]||0)+t.amount;
+  });
+
+  const entries = Object.entries(categories).sort((a,b)=>b[1]-a[1]);
+  document.getElementById("categories").innerHTML = entries.length
+    ? entries.map(([name,value])=>`
+      <div class="category-row">
+        <span>${icons[name]||"✨"} ${escapeHTML(name)}</span>
+        <strong>${formatRupiah(value)}</strong>
+      </div>`).join("")
+    : "<p>Belum ada pengeluaran.</p>";
+
+  renderTransactions();
+}
+
+function renderTransactions() {
+  const items = [...transactions].sort((a,b)=>b.id-a.id);
+  document.getElementById("transactions").innerHTML = items.length
+    ? items.map(t=>`
+      <div class="transaction-row">
+        <div>
+          <b>${escapeHTML(t.description)}</b>
+          <small>${escapeHTML(t.category)} · ${escapeHTML(t.date)}</small>
+        </div>
+        <div class="transaction-actions">
+          <strong class="${t.type==="income"?"green":"red"}">
+            ${t.type==="income"?"+":"−"}${formatRupiah(t.amount)}
+          </strong>
+          <button class="delete-transaction" type="button" data-delete="${t.id}" aria-label="Hapus transaksi">Hapus</button>
+        </div>
+      </div>`).join("")
+    : "<p>Belum ada transaksi.</p>";
+}
+
+document.getElementById("transactions").addEventListener("click", e => {
+  const button = e.target.closest("[data-delete]");
+  if (!button) return;
+  const id = Number(button.dataset.delete);
+  transactions = transactions.filter(t => t.id !== id);
+  saveState();
+  updateDashboard();
+  renderGamification();
+  notify("Transaksi dihapus. Saldo diperbarui.");
+});
+
+document.getElementById("transactionForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const type = document.getElementById("jenis").value;
+  const amount = Number(document.getElementById("nominal").value);
+  const category = document.getElementById("kategori").value;
+  const date = document.getElementById("tanggal").value;
+  const description = document.getElementById("deskripsi").value.trim();
+
+  if (!Number.isFinite(amount)||amount<=0||!date||!description) {
+    notify("Periksa kembali data transaksi.");
+    return;
+  }
+
+  transactions.push({
+    id:Date.now(),type,amount,category,date,description
+  });
+
+  saveState();
+  updateDashboard();
+  xp += 5;
+  saveState();
+  renderGamification();
+  e.target.reset();
+  document.getElementById("tanggal").value =
+    `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
+  notify("Transaksi tersimpan! +5 XP ✨");
+});
+
+function renderChallenges() {
+  document.getElementById("challenges").innerHTML = challenges.map(c=>{
+    const done = c.progress >= c.target;
+    return `
+    <div class="card">
+      <div class="challenge-icon">${c.emoji}</div>
+      <h3>${c.title}</h3>
+      <p>${c.desc}</p>
+      <p><b>Hadiah: ${c.reward} XP</b></p>
+      <p class="status">${done?"✅ Selesai":c.joined?"🟡 Sedang diikuti":"⚪ Belum diikuti"}</p>
+      <div class="progress"><span style="width:${Math.min(100,c.progress/c.target*100)}%"></span></div>
+      <p>${c.progress} dari ${c.target} progres</p>
+      ${!c.joined&&!done?`<button class="btn" data-join="${c.id}">Ikuti Tantangan</button>`:""}
+      ${c.joined&&!done?`<button class="btn" data-progress="${c.id}">Selesaikan Aktivitas +10 XP</button>`:""}
+    </div>`;
+  }).join("");
+}
+
+document.getElementById("challenges").addEventListener("click",e=>{
+  const join = e.target.closest("[data-join]");
+  const progress = e.target.closest("[data-progress]");
+
+  if(join) {
+    const c=challenges.find(x=>x.id===Number(join.dataset.join));
+    if(c&&!c.joined) {
+      c.joined=true;
+      saveState();
+      renderChallenges();
+      renderGamification();
+      notify("Tantangan berhasil diikuti!");
+    }
+  }
+
+  if(progress) {
+    const c=challenges.find(x=>x.id===Number(progress.dataset.progress));
+    if(!c||!c.joined||c.progress>=c.target)return;
+
+    c.progress++;
+    xp+=10;
+    notify("Progres bertambah! +10 XP");
+
+    if(c.progress===c.target&&!c.claimed) {
+      c.claimed=true;
+      xp+=c.reward;
+      completedMissions++;
+      notify(`Tantangan selesai! Bonus ${c.reward} XP 🏆`);
+    }
+
+    saveState();
+    renderChallenges();
+    renderGamification();
+  }
+});
+
+function renderGamification() {
+  const level=Math.floor(xp/100)+1;
+  const current=xp%100;
+  const names=["Pemula Finansial","Penjelajah Hemat","Jago Atur Uang","Master Finansial"];
+  document.getElementById("xp").textContent=xp;
+  document.getElementById("streakValue").textContent=streak;
+  document.getElementById("level").textContent=
+    `Level ${level} · ${names[Math.min(level-1,names.length-1)]}`;
+  document.getElementById("xpBar").style.width=current+"%";
+  document.getElementById("xpProgress").textContent=
+    `${current} / 100 XP menuju level berikutnya`;
+
+  const badges=[
+    {emoji:"📝",name:"Si Pencatat",ok:transactions.length>3},
+    {emoji:"🎯",name:"Pemburu Misi",ok:completedMissions>0},
+    {emoji:"🐷",name:"Calon Sultan",ok:challenges.some(c=>c.joined)},
+    {emoji:"🌟",name:"Konsisten",ok:xp>=200}
+  ];
+
+  document.getElementById("badges").innerHTML=badges.map(b=>`
+    <div class="badge" style="opacity:${b.ok?1:.45}">
+      <span>${b.emoji}</span><b>${b.name}</b><br>
+      <small>${b.ok?"Terbuka":"Belum terbuka"}</small>
+    </div>`).join("");
+}
+
+document.getElementById("quiz").addEventListener("click",e=>{
+  const button=e.target.closest("[data-answer]");
+  if(!button||button.disabled)return;
+
+  document.querySelectorAll(".quiz-option").forEach(b=>b.disabled=true);
+  const result=document.getElementById("quizResult");
+  result.classList.remove("hidden");
+
+  if(button.dataset.answer==="b") {
+    result.textContent="Benar! Menabung di awal membantu kamu konsisten.";
+    if(!quizRewarded) {
+      xp+=10;
+      quizRewarded=true;
+      saveState();
+      notify("Jawaban benar! +10 XP 🎉");
+    }
+  } else {
+    result.textContent="Belum tepat. Jawaban yang disarankan adalah B.";
+  }
+
+  renderGamification();
+});
+
+document.getElementById("retryQuiz").addEventListener("click",()=>{
+  document.querySelectorAll(".quiz-option").forEach(b=>b.disabled=false);
+  document.getElementById("quizResult").classList.add("hidden");
+});
+
+loadSettingsIntoForm();
+renderChallenges();
+updateDashboard();
+renderGamification();
+saveState();
+</script>
+</body>
+</html>
